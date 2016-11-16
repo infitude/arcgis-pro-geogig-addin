@@ -1,0 +1,56 @@
+﻿<ArcGIS defaultAssembly="GeogigModule.dll" defaultNamespace="GeogigModule" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
+  <AddInInfo id="{5620539d-7912-4662-a8d5-98d394636848}" version="1.0" desktopVersion="1.3.5861">
+    <Name>GeogigModule</Name>
+    <Description>GeogigModule description</Description>
+    <Image>Images\geogig.png</Image>
+    <Author>pete</Author>
+    <Company>Acme</Company>
+    <Date>11/15/2016 2:50:32 PM, 2016</Date>
+    <Subject>Framework</Subject>
+    <!-- Note subject can be one or more of these topics:
+                    Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map Exploration -->
+  </AddInInfo>
+  <modules>
+    <insertModule id="GeogigModule_Module" className="GeogigModule" autoLoad="false" caption="Module1">
+      <!-- uncomment to have the control hosted on a separate tab-->
+      <tabs>
+        <!--<tab id="GeogigModule_Tab1" caption="New Tab">
+          <group refID="GeogigModule_Group"/>
+        </tab>-->
+      </tabs>
+      <groups>
+        <!-- comment this out if you have no controls on the Addin tab to avoid
+              an empty group-->
+        <group id="GeogigModule_Group" caption="Geogig" appearsOnAddInTab="true">
+          <!-- host controls within groups -->
+          <button refID="GeogigModule_GeogigDockpane_ShowButton" size="large" />
+          <button refID="GeogigModule_GeogigDockpane_AddServerButton" size="large" />
+        </group>
+      </groups>
+      <controls>
+        <!-- add your controls here -->
+        <button id="GeogigModule_GeogigDockpane_ShowButton" caption="Navigator" className="GeogigDockpane_ShowButton" loadOnClick="true" smallImage="Images\geogig.png" largeImage="Images\geogig.png">
+          <tooltip heading="Show Geogig Navigator">Show Geogig Navigator<disabledText /></tooltip>
+        </button>
+        <button id="GeogigModule_GeogigDockpane_AddServerButton" caption="Add Server" className="GeogigDockpane_AddServerButton" loadOnClick="true" smallImage="Images\geogig_server.png" largeImage="Images\geogig_server.png">
+          <tooltip heading="Add Geogig Server">
+            Add Geogig Server<disabledText />
+          </tooltip>
+        </button>
+        <button id="GeogigModule_GeogigDockpane_MenuButton" caption="Geogig options" className="GeogigDockpane_MenuButton" loadOnClick="true" smallImage="Images\geogig.png" largeImage="Images\geogig.png">
+          <tooltip heading="Geogig options">Geogig options<disabledText /></tooltip>
+        </button>
+      </controls>
+      <dockPanes>
+        <dockPane id="GeogigModule_GeogigDockpane" caption="Geogig Navigator" className="GeogigDockpaneViewModel" dock="group" dockWith="esri_core_contentsDockPane">
+          <content className="GeogigDockpaneView" />
+        </dockPane>
+      </dockPanes>
+      <menus>
+        <menu id="GeogigModule_GeogigDockpane_Menu" caption="Options" contextMenu="true">
+          <button refID="GeogigModule_GeogigDockpane_MenuButton" />
+        </menu>
+      </menus>
+    </insertModule>
+  </modules>
+</ArcGIS>
