@@ -32,7 +32,11 @@
           </TextBlock>
         </DockPanel>
 
-        <TreeView x:Name="treeView" Grid.Row="1" ItemsSource="{Binding Servers}">
+        <!--<TreeView x:Name="treeView" Grid.Row="1" ItemsSource="{Binding Servers}">-->
+        <TreeView x:Name="treeView" Grid.Row="1">
+
+            <TreeViewItem ItemsSource="{Binding Servers}" Header="Repositories"/>
+
             <TreeView.ItemContainerStyle>
                 <!-- 
         This Style binds a TreeViewItem to a TreeViewItemViewModel. 
@@ -51,33 +55,33 @@
 
             <TreeView.Resources>
                 
-                <!--<HierarchicalDataTemplate DataType="{x:Type local:ServerViewModel}" ItemsSource="{Binding Children}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Width="16" Height="16" Margin="3,0" Source="Images\geogig_server.png" />
-                        <TextBlock Text="{Binding serverName}" />
-                    </StackPanel>
-                </HierarchicalDataTemplate>-->
-
-                <!--<HierarchicalDataTemplate DataType="{x:Type local:StateViewModel}" ItemsSource="{Binding Children}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Width="16" Height="16" Margin="3,0" Source="Images\State.png" />
-                        <TextBlock Text="{Binding StateName}" />
-                    </StackPanel>
-                </HierarchicalDataTemplate>-->
-
-                <!--<DataTemplate DataType="{x:Type local:CityViewModel}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Width="16" Height="16" Margin="3,0" Source="Images\City.png" />
-                        <TextBlock Text="{Binding CityName}" />
-                    </StackPanel>
-                </DataTemplate>-->
-
-                <DataTemplate DataType="{x:Type local:ServerViewModel}">
+                <HierarchicalDataTemplate DataType="{x:Type local:ServerViewModel}" ItemsSource="{Binding Children}">
                     <StackPanel Orientation="Horizontal">
                         <Image Width="16" Height="16" Margin="3,0" Source="Images\geogig_server.png" />
                         <TextBlock Text="{Binding ServerName}" />
                     </StackPanel>
-                </DataTemplate>
+                </HierarchicalDataTemplate>
+
+                <HierarchicalDataTemplate DataType="{x:Type local:RepositoryViewModel}" ItemsSource="{Binding Children}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Margin="3,0" Source="Images\geogig_server.png" />
+                        <TextBlock Text="{Binding RepositoryName}" />
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+
+                <HierarchicalDataTemplate DataType="{x:Type local:BranchViewModel}" ItemsSource="{Binding Children}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Margin="3,0" Source="Images\geogig_server.png" />
+                        <TextBlock Text="{Binding BranchName}" />
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+
+                <!--<DataTemplate DataType="{x:Type local:ServerViewModel}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Margin="3,0" Source="Images\geogig_server.png" />
+                        <TextBlock Text="{Binding ServerName}" />
+                    </StackPanel>
+                </DataTemplate>-->
 
             </TreeView.Resources>
 

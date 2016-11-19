@@ -23,8 +23,8 @@ namespace GeogigModule
 
         protected override void LoadChildren()
         {
-            //foreach (State state in Database.GetStates(_region))
-            //    base.Children.Add(new StateViewModel(state, this));
+            foreach (Repository repository in Geogig.GetRepositories(_server))
+                base.Children.Add(new RepositoryViewModel(repository, this));
         }
     }
 }

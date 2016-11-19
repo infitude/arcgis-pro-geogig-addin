@@ -11,7 +11,7 @@
                     Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map Exploration -->
   </AddInInfo>
   <modules>
-    <insertModule id="GeogigModule_Module" className="GeogigModule" autoLoad="false" caption="Module1">
+    <insertModule id="GeogigModule_Module" className="GeogigModuleSingleton" autoLoad="false" caption="Module1">
       <!-- uncomment to have the control hosted on a separate tab-->
       <tabs>
         <!--<tab id="GeogigModule_Tab1" caption="New Tab">
@@ -53,4 +53,23 @@
       </menus>
     </insertModule>
   </modules>
+
+
+  <propertySheets>
+    <updateSheet refID="esri_core_optionsPropertySheet">
+
+      <!--Use group=Application for the options to appear under the Application section in the settings-->
+      <!--assign the viewModel class to the className attribute; assign the view class to the className attribute in the content tag-->
+      <insertPage id="esri_sdk_PropertyPageAppSettings"
+                  caption="Geogig Settings"
+                  className="ApplicationSettingsViewModel"
+                  group="Application">
+        <content className="ApplicationSettingsView" />
+      </insertPage>
+
+    </updateSheet>
+  </propertySheets>
+
+
+
 </ArcGIS>

@@ -13,15 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
 namespace GeogigModule
 {
     /// <summary>
-    /// Interaction logic for GeogigDockpaneView.xaml
+    /// Interaction logic for ApplicationSettingsView.xaml
     /// </summary>
-    public partial class GeogigDockpaneView : UserControl
+    public partial class ApplicationSettingsView : UserControl
     {
-        public GeogigDockpaneView()
+        public ApplicationSettingsView()
         {
             InitializeComponent();
         }

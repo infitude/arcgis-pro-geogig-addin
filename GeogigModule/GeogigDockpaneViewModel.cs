@@ -14,20 +14,20 @@ namespace GeogigModule
         private const string _dockPaneID = "GeogigModule_GeogigDockpane";
         private const string _menuID = "GeogigModule_GeogigDockpane_Menu";
 
-        GeogigViewModel _viewModel;
+        readonly ReadOnlyCollection<ServerViewModel> _servers;
 
         protected GeogigDockpaneViewModel() {
+
             Server[] servers = Geogig.GetServers();
-            _viewModel = new GeogigViewModel(servers);
+            _servers = new ReadOnlyCollection<ServerViewModel>(
+                (from server in servers
+                 select new ServerViewModel(server))
+                .ToList());
         }
 
         public ReadOnlyCollection<ServerViewModel> Servers
         {
-            get { return _viewModel.Servers; }
-            //set
-            //{
-            //    SetProperty(ref _heading, value, () => Heading);
-            //}
+            get { return _servers; }
         }
 
 
@@ -106,6 +106,8 @@ namespace GeogigModule
     {
         protected override void OnClick()
         {
+            //GeogigModule.Current.Settings;
+
             string uri = ArcGIS.Desktop.Core.Project.Current.URI;
             ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(string.Format("Project uri {0}", uri));
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,12 @@ namespace GeogigModule
             this.ServerName = serverName;
         }
 
+        [JsonPropertyAttribute(PropertyName = "title", NullValueHandling = NullValueHandling.Ignore)]
         public string ServerName { get; private set; }
+
+        [JsonPropertyAttribute(PropertyName = "url", NullValueHandling = NullValueHandling.Ignore)]
+        public string Url { get; private set; }
+
 
         //readonly List<State> _states = new List<State>();
         //public List<State> States

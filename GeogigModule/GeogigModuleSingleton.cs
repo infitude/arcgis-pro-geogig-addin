@@ -6,25 +6,33 @@ using System.Windows.Input;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 using System.Threading.Tasks;
+using System.Xml;
+using ArcGIS.Desktop.Core.Events;
+using ArcGIS.Desktop.Core;
+using ArcGIS.Desktop.Framework.Threading.Tasks;
+
+using ArcGIS.Desktop.Internal.Core;
+using ArcGIS.Desktop.Mapping;
+using ArcGIS.Core.Data;
+using System.IO;
 
 namespace GeogigModule
 {
-    internal class GeogigModule : Module
+    internal class GeogigModuleSingleton : Module
     {
-        private static GeogigModule _this = null;
+        private static GeogigModuleSingleton _this = null;
 
         /// <summary>
         /// Retrieve the singleton instance to this module here
         /// </summary>
-        public static GeogigModule Current
+        public static GeogigModuleSingleton Current
         {
             get
             {
-                return _this ?? (_this = (GeogigModule)FrameworkApplication.FindModule("GeogigModule_Module"));
+                return _this ?? (_this = (GeogigModuleSingleton)FrameworkApplication.FindModule("GeogigModule_Module"));
             }
         }
 
-        #region Overrides
         /// <summary>
         /// Called by Framework when ArcGIS Pro is closing
         /// </summary>
@@ -35,8 +43,5 @@ namespace GeogigModule
             //return false to ~cancel~ Application close
             return true;
         }
-
-        #endregion Overrides
-
     }
 }

@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="GeogigModule.ApplicationSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GeogigModule"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="16,8,0,0" Orientation="Horizontal">
+            <TextBlock Text="User name" VerticalAlignment="Center"/>
+            <TextBox Margin="6,0,0,0" Text="{Binding UserNameSetting, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Margin="16,8,0,0"  Orientation="Horizontal">
+            <TextBlock Text="User email" VerticalAlignment="Center"/>
+            <TextBox Margin="6,0,0,0" Text="{Binding UserEmailSetting, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Margin="16,8,0,0"  Orientation="Horizontal">
+            <TextBlock Text="Repositories" VerticalAlignment="Center"/>
+            <TextBox Margin="6,0,0,0" Text="{Binding RepositoriesSetting, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Margin="16,8,0,0"  Orientation="Horizontal">
+            <TextBlock Text="Tracked Layers" VerticalAlignment="Center"/>
+            <TextBox Margin="6,0,0,0" Text="{Binding TrackedLayersSetting, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Margin="16,8,0,0"  Orientation="Horizontal">
+            <TextBlock Text="Data Folder" VerticalAlignment="Center"/>
+            <TextBox Margin="6,0,0,0" Text="{Binding BaseDataFolderSetting, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

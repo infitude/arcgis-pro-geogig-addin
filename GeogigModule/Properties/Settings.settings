@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GeogigModule.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="UserNameSetting" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Pete</Value>
+    </Setting>
+    <Setting Name="UserEmailSetting" Type="System.String" Scope="User">
+      <Value Profile="(Default)">pete@example.com</Value>
+    </Setting>
+    <Setting Name="RepositoriesSetting" Type="System.String" Scope="User">
+      <Value Profile="(Default)">[{"url": "http://localhost:8182", "title": "local"}]</Value>
+    </Setting>
+    <Setting Name="TrackedLayersSetting" Type="System.String" Scope="User">
+      <Value Profile="(Default)">[{"repoUrl": "http://localhost:8182/repos/repo/", "source": "c:\\mapdata\\geogig\\qgis_repo_data\\local\\repo\\citytown.gpkg|layername=citytown", "layername": "citytown", "geopkg": "c:\\mapdata\\geogig\\qgis_repo_data\\local\\repo\\citytown.gpkg"}]</Value>
+    </Setting>
+    <Setting Name="BaseDataFolderSetting" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Mapdata\geogig\qgis_repo_data</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
