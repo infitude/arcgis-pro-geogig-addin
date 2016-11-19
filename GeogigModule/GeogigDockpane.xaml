@@ -76,12 +76,12 @@
                     </StackPanel>
                 </HierarchicalDataTemplate>
 
-                <!--<DataTemplate DataType="{x:Type local:ServerViewModel}">
+                <DataTemplate DataType="{x:Type local:NodeViewModel}">
                     <StackPanel Orientation="Horizontal">
                         <Image Width="16" Height="16" Margin="3,0" Source="Images\geogig_server.png" />
-                        <TextBlock Text="{Binding ServerName}" />
+                        <TextBlock Text="{Binding PathName}" />
                     </StackPanel>
-                </DataTemplate>-->
+                </DataTemplate>
 
             </TreeView.Resources>
 

@@ -43,6 +43,8 @@ namespace GeogigModule
                 //}
                 repos repos = JsonConvert.DeserializeObject<repos>(response);
 
+                repos.repo.repository.server = server;
+
                 repositories = new Repository[] { repos.repo.repository };
             }
             return repositories;
@@ -70,12 +72,15 @@ namespace GeogigModule
                 //}
                 BranchResponse responseObject = JsonConvert.DeserializeObject<BranchResponse>(response);
                 Branch branch = responseObject.branchResponseType.local.branch;
+
+                branch.repository = repository;
+
                 branches = new Branch[] { branch };
             }
             return branches;
         }
 
-        public static Node[] GetNodes(string repositoryName, Branch branch)
+        public static Node[] GetNodes(Branch branch)
         {
             Node[] nodes;
 
@@ -84,7 +89,7 @@ namespace GeogigModule
             wc.Headers.Add("Accept", "application/json");
             wc.Encoding = System.Text.Encoding.UTF8;
 
-            string request = LsTreeCommand.GetRequest(repositoryName, branch);
+            string request = LsTreeCommand.GetRequest(branch);
             using (StreamReader sr = new StreamReader(wc.OpenRead(request),
                                                       System.Text.Encoding.UTF8, true))
             {
@@ -94,9 +99,10 @@ namespace GeogigModule
                 //    //throw
                 //    throw new System.ApplicationException(response);
                 //}
-                BranchResponse responseObject = JsonConvert.DeserializeObject<BranchResponse>(response);
-                //Branch branch = responseObject.branchResponseType.local.branch;
-                nodes = new Node[] { };
+                LsTreeResponse responseObject = JsonConvert.DeserializeObject<LsTreeResponse>(response);
+                Node node = responseObject.lsTreeResponseType.node;
+                node.branch = branch;
+                nodes = new Node[] { node };
             }
 
             return nodes;

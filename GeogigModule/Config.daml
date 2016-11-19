@@ -32,11 +32,6 @@
         <button id="GeogigModule_GeogigDockpane_ShowButton" caption="Navigator" className="GeogigDockpane_ShowButton" loadOnClick="true" smallImage="Images\geogig.png" largeImage="Images\geogig.png">
           <tooltip heading="Show Geogig Navigator">Show Geogig Navigator<disabledText /></tooltip>
         </button>
-        <button id="GeogigModule_GeogigDockpane_AddServerButton" caption="Add Server" className="GeogigDockpane_AddServerButton" loadOnClick="true" smallImage="Images\geogig_server.png" largeImage="Images\geogig_server.png">
-          <tooltip heading="Add Geogig Server">
-            Add Geogig Server<disabledText />
-          </tooltip>
-        </button>
         <button id="GeogigModule_GeogigDockpane_MenuButton" caption="Geogig options" className="GeogigDockpane_MenuButton" loadOnClick="true" smallImage="Images\geogig.png" largeImage="Images\geogig.png">
           <tooltip heading="Geogig options">Geogig options<disabledText /></tooltip>
         </button>

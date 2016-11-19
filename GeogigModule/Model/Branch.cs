@@ -16,5 +16,7 @@ namespace GeogigModule
 
         [JsonPropertyAttribute(PropertyName = "name", NullValueHandling = NullValueHandling.Ignore)]
         public string BranchName { get;  set; }
+
+        public Repository repository { get; set; }
     }
 }

@@ -23,8 +23,7 @@ namespace GeogigModule
 
         protected override void LoadChildren()
         {
-            RepositoryViewModel rvm = base.Parent as RepositoryViewModel;
-            foreach (Node node in Geogig.GetNodes(rvm.RepositoryName, _branch))
+            foreach (Node node in Geogig.GetNodes( _branch))
                 base.Children.Add(new NodeViewModel(node, this));
         }
     }

@@ -20,7 +20,8 @@ namespace GeogigModule
         public Repository(string repositoryName)
         {
             this.RepositoryName = repositoryName;
-
         }
+        
+        public Server server { get; set; }
     }
 }

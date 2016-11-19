@@ -12,6 +12,6 @@ namespace GeogigModule
         [JsonPropertyAttribute(PropertyName = "path", NullValueHandling = NullValueHandling.Ignore)]
         public string PathName { get; private set; }
 
-
+        public Branch branch { get; set; }
     }
 }
