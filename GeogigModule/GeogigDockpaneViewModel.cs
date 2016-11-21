@@ -14,6 +14,9 @@ namespace GeogigModule
         private const string _dockPaneID = "GeogigModule_GeogigDockpane";
         private const string _menuID = "GeogigModule_GeogigDockpane_Menu";
 
+
+        public static string DockPaneID { get { return _dockPaneID;  } }
+
         readonly ReadOnlyCollection<ServerViewModel> _servers;
 
         protected GeogigDockpaneViewModel() {
@@ -106,10 +109,14 @@ namespace GeogigModule
     {
         protected override void OnClick()
         {
-            //GeogigModule.Current.Settings;
+            GeogigDockpaneViewModel vm = FrameworkApplication.DockPaneManager.Find(GeogigDockpaneViewModel.DockPaneID) as GeogigDockpaneViewModel;
+            if (vm == null)
+                return;
 
-            string uri = ArcGIS.Desktop.Core.Project.Current.URI;
-            ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(string.Format("Project uri {0}", uri));
+            TreeViewItemViewModel serverTVI = vm.Servers.FirstOrDefault<TreeViewItemViewModel>(i => i.IsSelected);
+
+            //string uri = ArcGIS.Desktop.Core.Project.Current.URI;
+            //ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(string.Format("Project uri {0}", uri));
         }
     }
 }

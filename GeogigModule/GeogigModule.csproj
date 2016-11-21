@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="ViewModel\NodeViewModel.cs" />
     <Compile Include="WebApi\BranchCommand.cs" />
+    <Compile Include="WebApi\ExportCommand.cs" />
     <Compile Include="WebApi\Geogig.cs" />
     <Compile Include="Model\Server.cs" />
     <Compile Include="ViewModel\BranchViewModel.cs" />
