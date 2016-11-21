@@ -119,6 +119,7 @@
     <Compile Include="ViewModel\ServerViewModel.cs" />
     <Compile Include="ViewModel\TreeViewItemViewModel.cs" />
     <Compile Include="WebApi\LsTreeCommand.cs" />
+    <Compile Include="WebApi\RefParseCommand.cs" />
     <Compile Include="WebApi\ReposCommand.cs" />
   </ItemGroup>
   <ItemGroup>

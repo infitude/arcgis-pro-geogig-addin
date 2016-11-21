@@ -67,7 +67,7 @@ namespace GeogigModule
             requestUrl.Append("&path=");
             requestUrl.Append(node.PathName);
             requestUrl.Append("&root=");
-            requestUrl.Append(node.PathName); // root ?
+            requestUrl.Append(node.branch.objectId); 
             requestUrl.Append("&interchange=True&format=gpkg");
 
             WebClient wc = new WebClient();

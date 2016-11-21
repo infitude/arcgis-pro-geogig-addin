@@ -75,6 +75,9 @@ namespace GeogigModule
 
                 branch.repository = repository;
 
+                string objectId = RefParseCommand.GetRef(branch);
+                branch.objectId = objectId;
+
                 branches = new Branch[] { branch };
             }
             return branches;

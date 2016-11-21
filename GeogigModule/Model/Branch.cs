@@ -18,5 +18,7 @@ namespace GeogigModule
         public string BranchName { get;  set; }
 
         public Repository repository { get; set; }
+
+        public string objectId { get; set; }
     }
 }
