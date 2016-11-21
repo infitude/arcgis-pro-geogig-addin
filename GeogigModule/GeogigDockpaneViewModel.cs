@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace GeogigModule
 {
@@ -21,12 +22,35 @@ namespace GeogigModule
 
         protected GeogigDockpaneViewModel() {
 
+//            _executeExportCommand = new RelayCommand(() => ExecuteExport(), () => true);
+
             Server[] servers = Geogig.GetServers();
             _servers = new ReadOnlyCollection<ServerViewModel>(
                 (from server in servers
                  select new ServerViewModel(server))
                 .ToList());
         }
+
+        //private ICommand _executeExportCommand;
+        //public ICommand ExecuteExportCommand
+        //{
+        //    get { return _executeExportCommand; }
+        //}
+        //private bool _isExporting = true;
+
+        //private void ExecuteExport()
+        //{
+        //    if (_isExporting)
+        //    {
+        //        return;
+        //    }
+
+        //    _isExporting = true;
+
+        //    //await ExportCommand.ExecuteExport();
+
+        //    _isExporting = false;
+        //}
 
         public ReadOnlyCollection<ServerViewModel> Servers
         {
@@ -115,6 +139,24 @@ namespace GeogigModule
 
             TreeViewItemViewModel serverTVI = vm.Servers.FirstOrDefault<TreeViewItemViewModel>(i => i.IsSelected);
 
+
+            foreach (var server in vm.Servers)
+            {
+                foreach (var repo in server.Children)
+                {
+                    foreach (var branch in repo.Children)
+                    {
+                        foreach (var node in branch.Children)
+                        {
+                            if(node.IsSelected)
+                            {
+                                NodeViewModel selectedNVM = (NodeViewModel)node ;
+                                ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(selectedNVM.PathName);
+                            }
+                        }
+                    }
+                }
+            }
             //string uri = ArcGIS.Desktop.Core.Project.Current.URI;
             //ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(string.Format("Project uri {0}", uri));
         }

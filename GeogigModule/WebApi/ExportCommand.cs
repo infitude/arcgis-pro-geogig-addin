@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,80 +32,105 @@ namespace GeogigModule
     /// </summary>
     public static class ExportCommand
     {
-        public static string GetRequest(Node node)
-        {
-            StringBuilder request = new StringBuilder();
-            request.Append(node.branch.repository.server.Url);
-            request.Append(@"/repos/");
-            request.Append(node.branch.repository.RepositoryName);
-            request.Append("/export.json?table=");
-            request.Append(node.PathName);
-            request.Append("&path=");
-            request.Append(node.PathName);
-            request.Append("&root=");
-            request.Append(node.PathName); // root ?
-            request.Append("&interchange=True&format=gpkg");
-
-            return request.ToString();
-        }
-
-
-        //public static async Task ExecuteExport()
-        //{
-        //    var result = await GetExportStatus();
-        //}
-
-        public static async Task<Boolean> ExecuteExport()
+ 
+        public static async Task<Boolean> ExecuteExport(Node node)
         {
             // call export
-
-            while(true)
+            string status = GetExport(node);
+            while (true)
             {
-                switch("ExportStatus")
+                switch(status)
                 {
                     case "RUNNING":
                         await Task.Delay(1000);
+                        status = GetExportUpdate(node);
                         break;
                     case "FINISHED":
-                        //download export
+                        status = GetExportFile(node);
                         return true;
                     default:
                         return false;
                 }
             }
         }
-    }
 
-    /*
-      public class ExecuteExport()
-      {
 
-            timer(1000)
+        private static string GetExport(Node node)
+        {
+
+            StringBuilder requestUrl = new StringBuilder();
+            requestUrl.Append(node.branch.repository.server.Url);
+            requestUrl.Append(@"/repos/");
+            requestUrl.Append(node.branch.repository.RepositoryName);
+            requestUrl.Append("/export.json?table=");
+            requestUrl.Append(node.PathName);
+            requestUrl.Append("&path=");
+            requestUrl.Append(node.PathName);
+            requestUrl.Append("&root=");
+            requestUrl.Append(node.PathName); // root ?
+            requestUrl.Append("&interchange=True&format=gpkg");
+
+            WebClient wc = new WebClient();
+            wc.Headers.Add("user-agent", "arcgis_pro");
+            wc.Headers.Add("Accept", "application/json");
+            wc.Encoding = System.Text.Encoding.UTF8;
+
+            using (StreamReader sr = new StreamReader(wc.OpenRead(requestUrl.ToString()),
+                                                      System.Text.Encoding.UTF8, true))
+            {
+                string response = sr.ReadToEnd();
+                //if (ResponseIsError(response))
+                //{
+                //    //throw
+                //    throw new System.ApplicationException(response);
+                //}
+                TaskResponse responseObject = JsonConvert.DeserializeObject<TaskResponse>(response);
+                string status = responseObject.taskResponseType.status;
+                return status;
+            }
+
         }
 
-        onTimer()
+
+        private static string GetExportUpdate(Node node)
         {
-            check if finished
-            {   
-                stop timer
-                download
-                done - return data
-                }
-        check if waited too long         
+            return "";
+        }
+
+        private static string GetExportFile(Node node)
+        {
+            return "";
+        }
+
     }
 
-    private async Task<int> WaitForMessages()
+
+
+
+    /// <summary>
+    /// Task JSON response classes
+    /// </summary>
+    public class TaskResponse
     {
-        int messageCount = popClient.GetMessageCount();
-
-        while (messageCount == 0)
-        {
-            await Task.Delay(1000);
-            messageCount = popClient.GetMessageCount();
-        }
-
-        return messageCount;
+        [JsonPropertyAttribute(PropertyName = "task", NullValueHandling = NullValueHandling.Ignore)]
+        public TaskResponseType taskResponseType { get; set; }
     }
 
-    */
+    public class TaskResponseType
+    {
+        [JsonPropertyAttribute(PropertyName = "id", NullValueHandling = NullValueHandling.Ignore)]
+        public int id { get; set; }
+
+        [JsonPropertyAttribute(PropertyName = "status", NullValueHandling = NullValueHandling.Ignore)]
+        public string status { get; set; }
+
+        [JsonPropertyAttribute(PropertyName = "description", NullValueHandling = NullValueHandling.Ignore)]
+        public string description { get; set; }
+
+        [JsonPropertyAttribute(PropertyName = "href", NullValueHandling = NullValueHandling.Ignore)]
+        public string href { get; set; }
+
+    }
+
+
 }
