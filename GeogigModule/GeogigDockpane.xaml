@@ -18,7 +18,8 @@
     <Grid>
         <Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" LastChildFill="true" KeyboardNavigation.TabNavigation="Local" Height="30">
@@ -32,8 +33,16 @@
           </TextBlock>
         </DockPanel>
 
-        <!--<TreeView x:Name="treeView" Grid.Row="1" ItemsSource="{Binding Servers}">-->
-        <TreeView x:Name="treeView" Grid.Row="1">
+        <Button Grid.Row="1" Name="View_Info"   Margin="0"  HorizontalAlignment="Left"  HorizontalContentAlignment="Left"  
+                                VerticalAlignment="Top" Command="{Binding ViewCMD}" Style="{DynamicResource Esri_SimpleBorderlessButton}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="pack://application:,,,/GeogigModule;component/Images/geogig_server.png" />
+                <!--<TextBlock Text="View Information" Margin="3,0,0,0" />-->
+            </StackPanel>
+        </Button>
+
+
+        <TreeView x:Name="treeView" Grid.Row="2">
 
             <TreeViewItem ItemsSource="{Binding Servers}" Header="Repositories"/>
 

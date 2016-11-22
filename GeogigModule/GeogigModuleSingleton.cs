@@ -43,5 +43,15 @@ namespace GeogigModule
             //return false to ~cancel~ Application close
             return true;
         }
+
+        internal static void OnGeogigLayerSyncButtonClick()
+        {
+            ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show("Hello");
+        }
+
+        internal static bool CanOnGeogigLayerSyncButtonClick
+        {
+            get { return true;  }
+        }
     }
 }

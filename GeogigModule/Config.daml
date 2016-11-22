@@ -25,6 +25,7 @@
           <!-- host controls within groups -->
           <button refID="GeogigModule_GeogigDockpane_ShowButton" size="large" />
           <button refID="GeogigModule_GeogigDockpane_AddServerButton" size="large" />
+          <button refID="GeogigModule_LayerViewButton" size="large" />
         </group>
       </groups>
       <controls>
@@ -34,6 +35,11 @@
         </button>
         <button id="GeogigModule_GeogigDockpane_MenuButton" caption="Geogig options" className="GeogigDockpane_MenuButton" loadOnClick="true" smallImage="Images\geogig.png" largeImage="Images\geogig.png">
           <tooltip heading="Geogig options">Geogig options<disabledText /></tooltip>
+        </button>
+        <button id="GeogigModule_LayerViewerButton" caption="Sync layer..." className="GeogigModule_Module:OnGeogigLayerSyncButtonClick" loadOnClick="true" smallImage="Images\GenericButtonBlue16.png" largeImage="Images\GenericButtonBlue32.png" condition="esri_mapping_singleLayerSelectedCondition">
+          <tooltip heading="Sync layer with repository branch">
+            <disabledText />
+          </tooltip>
         </button>
       </controls>
       <dockPanes>
@@ -45,26 +51,26 @@
         <menu id="GeogigModule_GeogigDockpane_Menu" caption="Options" contextMenu="true">
           <button refID="GeogigModule_GeogigDockpane_MenuButton" />
         </menu>
+        <menu id="GeogigModule_GeogigLayer_Menu" caption="Geogig" contextMenu="true">
+          <button refID="GeogigModule_LayerViewerButton" />
+        </menu>
       </menus>
     </insertModule>
+    <updateModule refID="esri_mapping">
+      <menus>
+        <updateMenu refID="esri_mapping_layerContextMenu">
+          <insertMenu refID="GeogigModule_GeogigLayer_Menu" separator="true" placeWith="esri_mapping_selectedLayerPropertiesButton"/>
+        </updateMenu>
+      </menus>
+    </updateModule>
   </modules>
-
-
   <propertySheets>
     <updateSheet refID="esri_core_optionsPropertySheet">
-
       <!--Use group=Application for the options to appear under the Application section in the settings-->
       <!--assign the viewModel class to the className attribute; assign the view class to the className attribute in the content tag-->
-      <insertPage id="esri_sdk_PropertyPageAppSettings"
-                  caption="Geogig Settings"
-                  className="ApplicationSettingsViewModel"
-                  group="Application">
+      <insertPage id="esri_sdk_PropertyPageAppSettings" caption="Geogig Settings" className="ApplicationSettingsViewModel" group="Application">
         <content className="ApplicationSettingsView" />
       </insertPage>
-
     </updateSheet>
   </propertySheets>
-
-
-
 </ArcGIS>
