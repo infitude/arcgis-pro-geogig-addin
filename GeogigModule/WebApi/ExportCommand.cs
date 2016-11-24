@@ -155,32 +155,4 @@ namespace GeogigModule
             return true;
         }
     }
-
-
-    /// <summary>
-    /// Task JSON response classes
-    /// </summary>
-    public class TaskResponse
-    {
-        [JsonPropertyAttribute(PropertyName = "task", NullValueHandling = NullValueHandling.Ignore)]
-        public TaskResponseType taskResponseType { get; set; }
-    }
-
-    public class TaskResponseType
-    {
-        [JsonPropertyAttribute(PropertyName = "id", NullValueHandling = NullValueHandling.Ignore)]
-        public int id { get; set; }
-
-        [JsonPropertyAttribute(PropertyName = "status", NullValueHandling = NullValueHandling.Ignore)]
-        public string status { get; set; }
-
-        [JsonPropertyAttribute(PropertyName = "description", NullValueHandling = NullValueHandling.Ignore)]
-        public string description { get; set; }
-
-        [JsonPropertyAttribute(PropertyName = "href", NullValueHandling = NullValueHandling.Ignore)]
-        public string href { get; set; }
-
-    }
-
-
 }

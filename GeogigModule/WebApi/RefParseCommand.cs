@@ -19,15 +19,13 @@ namespace GeogigModule
     {
         public static string GetRef(Branch branch)
         {
-
             StringBuilder requestUrl = new StringBuilder();
             requestUrl.Append(branch.repository.server.Url);
             requestUrl.Append(@"/repos/");
             requestUrl.Append(branch.repository.RepositoryName);
             requestUrl.Append("/refparse?output_format=json&name=");
             requestUrl.Append(branch.BranchName);
-
-
+            
             WebClient wc = new WebClient();
             wc.Headers.Add("user-agent", "arcgis_pro");
             wc.Headers.Add("Accept", "application/json");
@@ -37,42 +35,14 @@ namespace GeogigModule
                                                       System.Text.Encoding.UTF8, true))
             {
                 string response = sr.ReadToEnd();
-                //if (ResponseIsError(response))
-                //{
-                //    //throw
-                //    throw new System.ApplicationException(response);
-                //}
                 RefParseResponse responseObject = JsonConvert.DeserializeObject<RefParseResponse>(response);
+                if(responseObject.refParseResponseType.success == false)
+                {
+                    throw new System.ApplicationException(response);
+                }
                 string objectid = responseObject.refParseResponseType.refobj.objectId;
                 return objectid;
             }
-
         }
     }
-
-
-    public class RefParseResponse
-    {
-        [JsonPropertyAttribute(PropertyName = "response", NullValueHandling = NullValueHandling.Ignore)]
-        public RefParseResponseType refParseResponseType { get; set; }
-    }
-
-    public class RefParseResponseType
-    {
-        [JsonPropertyAttribute(PropertyName = "success", NullValueHandling = NullValueHandling.Ignore)]
-        public bool success { get; set; }
-
-        [JsonPropertyAttribute(PropertyName = "Ref", NullValueHandling = NullValueHandling.Ignore)]
-        public Ref refobj { get; set; }
-    }
-
-    public class Ref
-     {
-        [JsonPropertyAttribute(PropertyName = "name", NullValueHandling = NullValueHandling.Ignore)]
-        public string name { get; set; }
-
-        [JsonPropertyAttribute(PropertyName = "objectId", NullValueHandling = NullValueHandling.Ignore)]
-        public string objectId { get; set; }
-     }
-
 }

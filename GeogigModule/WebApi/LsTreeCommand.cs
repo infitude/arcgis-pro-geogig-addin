@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,26 +22,33 @@ namespace GeogigModule
             request.Append("&output_format=json&onlyTrees=True");
             return request.ToString();             
         }
+
+        public static Node[] GetNodes(Branch branch)
+        {
+            Node[] nodes;
+
+            WebClient wc = new WebClient();
+            wc.Headers.Add("user-agent", "arcgis_pro");
+            wc.Headers.Add("Accept", "application/json");
+            wc.Encoding = System.Text.Encoding.UTF8;
+
+            string request = LsTreeCommand.GetRequest(branch);
+            using (StreamReader sr = new StreamReader(wc.OpenRead(request),
+                                                      System.Text.Encoding.UTF8, true))
+            {
+                string response = sr.ReadToEnd();
+                LsTreeResponse responseObject = JsonConvert.DeserializeObject<LsTreeResponse>(response);
+                if (responseObject.lsTreeResponseType.success == false)
+                {
+                    throw new System.ApplicationException(response);
+                }
+                Node node = responseObject.lsTreeResponseType.node;
+                node.branch = branch;
+                nodes = new Node[] { node };
+            }
+            return nodes;
+        }
+
     }
 
-
-
-    /// <summary>
-    /// LsTree command JSON response classes
-    /// </summary>
-    public class LsTreeResponse
-    {
-        [JsonPropertyAttribute(PropertyName = "response", NullValueHandling = NullValueHandling.Ignore)]
-        public LsTreeResponseType lsTreeResponseType { get; set; }
-    }
-
-    public class LsTreeResponseType
-    {
-        [JsonPropertyAttribute(PropertyName = "success", NullValueHandling = NullValueHandling.Ignore)]
-        public bool success { get; set; }
-
-        [JsonPropertyAttribute(PropertyName = "node", NullValueHandling = NullValueHandling.Ignore)]
-        public Node node { get; set; }
-    }
-    
 }

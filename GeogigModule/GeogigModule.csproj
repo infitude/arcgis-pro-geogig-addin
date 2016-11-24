@@ -119,6 +119,21 @@
     <Compile Include="ViewModel\ServerViewModel.cs" />
     <Compile Include="ViewModel\TreeViewItemViewModel.cs" />
     <Compile Include="WebApi\LsTreeCommand.cs" />
+    <Compile Include="WebApi\ResponseClasses\User.cs" />
+    <Compile Include="WebApi\ResponseClasses\BranchResponse.cs" />
+    <Compile Include="WebApi\ResponseClasses\BranchResponseLocal.cs" />
+    <Compile Include="WebApi\ResponseClasses\BranchResponseType.cs" />
+    <Compile Include="WebApi\ResponseClasses\Commit.cs" />
+    <Compile Include="WebApi\ResponseClasses\LogResponse.cs" />
+    <Compile Include="WebApi\ResponseClasses\LogResponseType.cs" />
+    <Compile Include="WebApi\ResponseClasses\LsTreeResponse.cs" />
+    <Compile Include="WebApi\ResponseClasses\LsTreeResponseType.cs" />
+    <Compile Include="WebApi\ResponseClasses\Parents.cs" />
+    <Compile Include="WebApi\ResponseClasses\Ref.cs" />
+    <Compile Include="WebApi\ResponseClasses\RefParseResponse.cs" />
+    <Compile Include="WebApi\ResponseClasses\RefParseResponseType.cs" />
+    <Compile Include="WebApi\ResponseClasses\TaskResponse.cs" />
+    <Compile Include="WebApi\ResponseClasses\TaskResponseType.cs" />
     <Compile Include="WebApi\RefParseCommand.cs" />
     <Compile Include="WebApi\ReposCommand.cs" />
   </ItemGroup>

@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,8 +15,35 @@ namespace GeogigModule
         {
             return server.Url + @"/repos";
         }
-    }
 
+        public static Repository[] GetRepositories(Server server)
+        {
+            Repository[] repositories;
+
+            WebClient wc = new WebClient();
+            wc.Headers.Add("user-agent", "arcgis_pro");
+            wc.Headers.Add("Accept", "application/json");
+            wc.Encoding = System.Text.Encoding.UTF8;
+
+            using (StreamReader sr = new StreamReader(wc.OpenRead(ReposCommand.GetRequest(server)),
+                                                      System.Text.Encoding.UTF8, true))
+            {
+                string response = sr.ReadToEnd();
+                //if (ResponseIsError(response))
+                //{
+                //    //throw
+                //    throw new System.ApplicationException(response);
+                //}
+                repos repos = JsonConvert.DeserializeObject<repos>(response);
+
+                repos.repo.repository.server = server;
+
+                repositories = new Repository[] { repos.repo.repository };
+            }
+            return repositories;
+        }
+
+    }
     /// <summary>
     /// These two classes are tempoary 'shims' for the /repos response from geogig - suspect the response should be an array
     /// but will need to check....

@@ -46,12 +46,39 @@ namespace GeogigModule
 
         internal static void OnGeogigLayerSyncButtonClick()
         {
-            ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show("Hello");
+            string layerName = "unknown";
+            if (MapView.Active != null)
+            {
+                // get toc highlighted layers
+                var selLayers = MapView.Active.GetSelectedLayers();
+                // retrieve the first one
+                Layer layer = selLayers.FirstOrDefault();
+                if (layer != null)
+                {
+                    layerName = layer.Name;
+                }
+            }
+            ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(layerName);
         }
 
-        internal static bool CanOnGeogigLayerSyncButtonClick
-        {
-            get { return true;  }
-        }
+        //internal static bool CanOnGeogigLayerSyncButtonClick
+        //{
+        //    get {
+        //        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show("checking");
+        //        if (MapView.Active != null)
+        //            {
+        //                // get toc highlighted layers
+        //                var selLayers = MapView.Active.GetSelectedLayers();
+        //                // retrieve the first one
+        //                Layer layer = selLayers.FirstOrDefault();
+        //                if (layer != null)
+        //                {
+        //                    if (layer.Name == "main.citytown")
+        //                        return true;
+        //                }
+        //            }
+        //        return false;
+        //    }
+        //}
     }
 }
