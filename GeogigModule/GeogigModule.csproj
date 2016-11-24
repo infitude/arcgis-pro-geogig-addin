@@ -109,6 +109,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ImportCommand.cs" />
     <Compile Include="ViewModel\NodeViewModel.cs" />
     <Compile Include="WebApi\BranchCommand.cs" />
     <Compile Include="WebApi\ExportCommand.cs" />
@@ -119,6 +120,14 @@
     <Compile Include="ViewModel\ServerViewModel.cs" />
     <Compile Include="ViewModel\TreeViewItemViewModel.cs" />
     <Compile Include="WebApi\LsTreeCommand.cs" />
+    <Compile Include="WebApi\ResponseClasses\CheckoutResponse.cs" />
+    <Compile Include="WebApi\ResponseClasses\CheckoutResponseType.cs" />
+    <Compile Include="WebApi\ResponseClasses\NewFeatures.cs" />
+    <Compile Include="WebApi\ResponseClasses\NewFeaturesType.cs" />
+    <Compile Include="WebApi\ResponseClasses\Result.cs" />
+    <Compile Include="WebApi\ResponseClasses\Transaction.cs" />
+    <Compile Include="WebApi\ResponseClasses\TransactionResponse.cs" />
+    <Compile Include="WebApi\ResponseClasses\TransactionResponseType.cs" />
     <Compile Include="WebApi\ResponseClasses\User.cs" />
     <Compile Include="WebApi\ResponseClasses\BranchResponse.cs" />
     <Compile Include="WebApi\ResponseClasses\BranchResponseLocal.cs" />

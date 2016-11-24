@@ -21,5 +21,11 @@ namespace GeogigModule
         [JsonPropertyAttribute(PropertyName = "href", NullValueHandling = NullValueHandling.Ignore)]
         public string href { get; set; }
 
+        [JsonPropertyAttribute(PropertyName = "transactionId", NullValueHandling = NullValueHandling.Ignore)]
+        public string transactionId { get; set; }
+
+        [JsonPropertyAttribute(PropertyName = "result", NullValueHandling = NullValueHandling.Ignore)]
+        public Result result { get; set; }
+
     }
 }

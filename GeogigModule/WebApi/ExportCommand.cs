@@ -9,30 +9,8 @@ using System.Threading.Tasks;
 
 namespace GeogigModule
 {
-    /// <summary>
-    /// https://gist.github.com/isaacabraham/7592405
-    /// 
-    /// GET http://localhost:8182/repos/repo/export.json?table=citytown&path=citytown&root=99d57538c21c00f89dad4c39b5f6824ce4e697be&interchange=True&format=gpkg HTTP/1.1
-    //Host: localhost:8182
-    //Connection: keep-alive
-    //Accept-Encoding: gzip, deflate
-    //Accept: */*
-    //User-Agent: python-requests/2.11.1
-
-
-    //HTTP/1.1 200 OK
-    //Date: Sat, 19 Nov 2016 08:50:46 GMT
-    //Server: Noelios-Restlet-Engine/1.0..8
-    //Content-Type: application/json
-    //Vary: Accept-Charset, Accept-Encoding, Accept-Language, Accept
-    //Content-Length: 171
-
-    //{"task":{"id":1,"status":"RUNNING","description":"Export to Geopackage database with geogig interchange format extension","href":"http:\/\/localhost:8182\/tasks\/1.json"}}
-
-    /// </summary>
     public static class ExportCommand
     {
- 
         public static async Task<Boolean> ExecuteExport(Node node)
         {
             // call export
@@ -54,10 +32,8 @@ namespace GeogigModule
             }
         }
 
-
         private static TaskResponseType GetExport(Node node)
         {
-
             StringBuilder requestUrl = new StringBuilder();
             requestUrl.Append(node.branch.repository.server.Url);
             requestUrl.Append(@"/repos/");
@@ -88,7 +64,6 @@ namespace GeogigModule
                 return responseObject.taskResponseType;
             }
         }
-
 
         // GET http://localhost:8182/tasks/1.json HTTP/1.1
         private static string GetExportUpdate(Node node, int task)
