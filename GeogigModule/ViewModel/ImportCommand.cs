@@ -57,16 +57,9 @@ namespace GeogigModule
                                                       System.Text.Encoding.UTF8, true))
             {
                 string response = sr.ReadToEnd();
-                //if (ResponseIsError(response))
-                //{
-                //    //throw
-                //    throw new System.ApplicationException(response);
-                //}
                 TaskResponse responseObject = JsonConvert.DeserializeObject<TaskResponse>(response);
                 return responseObject.taskResponseType.status;
             }
         }
-
-
     }
 }
