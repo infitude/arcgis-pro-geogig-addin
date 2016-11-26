@@ -14,7 +14,7 @@ namespace GeogigModule
 
 
         [JsonPropertyAttribute(PropertyName = "href", NullValueHandling = NullValueHandling.Ignore)]
-        public string Url { get; private set; }
+        public string Url { get; set; }
 
 
         public Repository(string repositoryName)

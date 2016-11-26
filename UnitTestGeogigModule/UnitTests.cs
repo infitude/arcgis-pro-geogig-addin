@@ -17,7 +17,7 @@ namespace UnitTestGeogigModule
         {
             // GET http://localhost:8182/repos/repo/branch?output_format=json&list=True HTTP/1.1
             string json = @"{ ""response"":{ ""success"":true,""Local"":{ ""Branch"":{ ""name"":""master""} },""Remote"":""""} }";
-            BranchResponse responseObject  = JsonConvert.DeserializeObject<BranchResponse>(json);
+            BranchResponse responseObject = JsonConvert.DeserializeObject<BranchResponse>(json);
             Assert.AreEqual(responseObject.branchResponseType.success, true);
             Assert.AreEqual(responseObject.branchResponseType.local.branch.BranchName, "master");
         }
@@ -40,21 +40,21 @@ namespace UnitTestGeogigModule
         ///         "href":"http:\/\/localhost:8182\/tasks\/3.json",
         ///         "result":{
         ///                     "newCommit":{
-    ///                             "id":"43d5699ab8c03c4ae4422567c84b627aab2ab903",
-    ///                             "tree":"310f126a85dbe8e916af66319e2326b21530570e",
-    ///                             "parents":{
-    ///                                 "id":"85fa30d101837b22f1e5d375966b3a63bc32248b"},
-    ///                             "author":{
-    ///                                 "name":"Pete",
-    ///                                 "email":"pete@example.com",
-    ///                                 "timestamp":1479790440629,
-    ///                                 "timeZoneOffset":0},
-    ///                             "committer":{
-    ///                                 "name":"Pete",
-    ///                                 "email":"pete@example.com",
-    ///                                 "timestamp":1479790440629,
-    ///                                 "timeZoneOffset":0},
-    ///                             "message":"moved another"},
+        ///                             "id":"43d5699ab8c03c4ae4422567c84b627aab2ab903",
+        ///                             "tree":"310f126a85dbe8e916af66319e2326b21530570e",
+        ///                             "parents":{
+        ///                                 "id":"85fa30d101837b22f1e5d375966b3a63bc32248b"},
+        ///                             "author":{
+        ///                                 "name":"Pete",
+        ///                                 "email":"pete@example.com",
+        ///                                 "timestamp":1479790440629,
+        ///                                 "timeZoneOffset":0},
+        ///                             "committer":{
+        ///                                 "name":"Pete",
+        ///                                 "email":"pete@example.com",
+        ///                                 "timestamp":1479790440629,
+        ///                                 "timeZoneOffset":0},
+        ///                             "message":"moved another"},
         ///                      "importCommit":{
         ///                         "id":"43d5699ab8c03c4ae4422567c84b627aab2ab903",
         ///                         "tree":"310f126a85dbe8e916af66319e2326b21530570e",
@@ -71,10 +71,48 @@ namespace UnitTestGeogigModule
         ///                             "timestamp":1479790440629,
         ///                             "timeZoneOffset":0},
         ///                         "message":"moved another"},
-    ///                         "NewFeatures":{
-    ///                             "type":{
-    ///                             "@name":"citytown"}}}}}
+        ///                         "NewFeatures":{
+        ///                             "type":{
+        ///                             "@name":"citytown"}}}}}
         /// </summary>
+        /// 
+
+        /// "{\"task\":{\"id\":10,\"status\":\"RUNNING\",\"transactionId\":\"a091bd1c-306a-474c-8a5e-97b45f6bd231\",\"description\":\"Importing GeoPackage database file.\",\"href\":\"http:\\/\\/localhost:8182\\/tasks\\/10.json\"}}"
+        /// 
+        [TestMethod]
+        public void TestDeserializeImportTaskJson()
+        {
+            string json = @"{""task"":{""id"":10,""status"":""RUNNING"",""transactionId"":""a091bd1c-306a-474c-8a5e-97b45f6bd231"",""description"":""Importing GeoPackage database file."",""href"":""http:\/\/localhost:8182\/tasks\/10.json""}}";
+            TaskResponse responseObject = JsonConvert.DeserializeObject<TaskResponse>(json);
+            Assert.AreEqual(responseObject.taskResponseType.status, "RUNNING");
+            Assert.AreEqual(responseObject.taskResponseType.id, 10);
+        }
+
+        [TestMethod]
+        public void TestDeserializeParentIdArrayJson()
+        { 
+            string json = @"{""parents"":{""id"":[""43d5699ab8c03c4ae4422567c84b627aab2ab903"",""0dd5fc2959c877e790e5822908d360878b60f715""]}}";
+            Commit commit = JsonConvert.DeserializeObject<Commit>(json);            
+            Assert.AreEqual(commit.parents.id[0], "43d5699ab8c03c4ae4422567c84b627aab2ab903");
+        }
+
+        [TestMethod]
+        public void TestDeserializeParentIdValueJson()
+        {
+            string json = @"{""parents"":{""id"":""85fa30d101837b22f1e5d375966b3a63bc32248b""}}";
+            Commit commit = JsonConvert.DeserializeObject<Commit>(json);
+            Assert.AreEqual(commit.parents.id[0], "85fa30d101837b22f1e5d375966b3a63bc32248b");
+        }
+
+        [TestMethod]
+        public void TestDeserializeMultiParentIdTaskJson()
+        {
+            string json = @"{""task"":{""id"":12,""status"":""FINISHED"",""transactionId"":""0d4e0eff-8452-4399-bc59-ec44b77470f8"",""description"":""Importing GeoPackage database file."",""href"":""http:\\/\\/localhost:8182\\/tasks\\/12.json"",""result"":{""newCommit"":{""id"":""1072177b4c600ef081f7d067849d442be7e02728"",""tree"":""310f126a85dbe8e916af66319e2326b21530570e"",""parents"":{""id"":[""43d5699ab8c03c4ae4422567c84b627aab2ab903"",""0dd5fc2959c877e790e5822908d360878b60f715""]},""author"":{""name"":""Pete"",""email"":""pete@example.com"",""timestamp"":1480124086359,""timeZoneOffset"":46800000},""committer"":{""name"":""Pete"",""email"":""pete@e-spatial.co.nz"",""timestamp"":1480124086359,""timeZoneOffset"":46800000},""message"":""Merge: moved another""},""importCommit"":{""id"":""0dd5fc2959c877e790e5822908d360878b60f715"",""tree"":""310f126a85dbe8e916af66319e2326b21530570e"",""parents"":{""id"":""85fa30d101837b22f1e5d375966b3a63bc32248b""},""author"":{""name"":""Pete"",""email"":""pete@example.com"",""timestamp"":1480124086325,""timeZoneOffset"":0},""committer"":{""name"":""Pete"",""email"":""pete@example.com"",""timestamp"":1480124086325,""timeZoneOffset"":0},""message"":""moved another""},""NewFeatures"":{""type"":{""@name"":""citytown""}}}}}";
+            TaskResponse responseObject = JsonConvert.DeserializeObject<TaskResponse>(json);
+            Assert.AreEqual(responseObject.taskResponseType.status, "FINISHED");
+            Assert.AreEqual(responseObject.taskResponseType.result.newCommit.parents.id[0], "43d5699ab8c03c4ae4422567c84b627aab2ab903");
+        }
+
         [TestMethod]
         public void TestDeserializeExport2Json()
         {
@@ -90,7 +128,7 @@ namespace UnitTestGeogigModule
             // GET http://localhost:8182/repos/repo/ls-tree?path=HEAD&output_format=json&onlyTrees=True HTTP/1.1
             string json = @"{""response"":{""success"":true,""node"":{""path"":""citytown""}}}";
             LsTreeResponse responseObject = JsonConvert.DeserializeObject<LsTreeResponse>(json);
-            Assert.AreEqual(responseObject.lsTreeResponseType.node.PathName, "citytown");           
+            Assert.AreEqual(responseObject.lsTreeResponseType.node.PathName, "citytown");
         }
 
         [TestMethod]
@@ -154,4 +192,7 @@ namespace UnitTestGeogigModule
         // GET http://localhost:8182/repos/repo/export-diff.json?oldRef=43d5699ab8c03c4ae4422567c84b627aab2ab903&newRef=43d5699ab8c03c4ae4422567c84b627aab2ab903&format=gpkg HTTP/1.1
 
     }
+
+
+
 }

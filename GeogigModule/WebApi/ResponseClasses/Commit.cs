@@ -15,7 +15,7 @@ namespace GeogigModule
         [JsonPropertyAttribute(PropertyName = "tree", NullValueHandling = NullValueHandling.Ignore)]
         public string tree { get; set; }
 
-        [JsonPropertyAttribute(PropertyName = "parents", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyAttribute(PropertyName = "parents", NullValueHandling = NullValueHandling.Ignore, ItemConverterType = typeof(ParentsConverter))]
         public Parents parents { get; set; }
 
         [JsonPropertyAttribute(PropertyName = "author", NullValueHandling = NullValueHandling.Ignore)]

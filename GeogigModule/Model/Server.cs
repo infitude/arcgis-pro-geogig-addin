@@ -15,10 +15,10 @@ namespace GeogigModule
         }
 
         [JsonPropertyAttribute(PropertyName = "title", NullValueHandling = NullValueHandling.Ignore)]
-        public string ServerName { get; private set; }
+        public string ServerName { get; set; }
 
         [JsonPropertyAttribute(PropertyName = "url", NullValueHandling = NullValueHandling.Ignore)]
-        public string Url { get; private set; }
+        public string Url { get; set; }
 
 
         //readonly List<State> _states = new List<State>();
