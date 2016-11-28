@@ -15,14 +15,11 @@ namespace GeogigModule
         private const string _dockPaneID = "GeogigModule_GeogigDockpane";
         private const string _menuID = "GeogigModule_GeogigDockpane_Menu";
 
-
         public static string DockPaneID { get { return _dockPaneID;  } }
 
         readonly ReadOnlyCollection<ServerViewModel> _servers;
 
         protected GeogigDockpaneViewModel() {
-
-//            _executeExportCommand = new RelayCommand(() => ExecuteExport(), () => true);
 
             Server[] servers = Geogig.GetServers();
             _servers = new ReadOnlyCollection<ServerViewModel>(
@@ -31,32 +28,10 @@ namespace GeogigModule
                 .ToList());
         }
 
-        //private ICommand _executeExportCommand;
-        //public ICommand ExecuteExportCommand
-        //{
-        //    get { return _executeExportCommand; }
-        //}
-        //private bool _isExporting = true;
-
-        //private void ExecuteExport()
-        //{
-        //    if (_isExporting)
-        //    {
-        //        return;
-        //    }
-
-        //    _isExporting = true;
-
-        //    //await ExportCommand.ExecuteExport();
-
-        //    _isExporting = false;
-        //}
-
         public ReadOnlyCollection<ServerViewModel> Servers
         {
             get { return _servers; }
         }
-
 
         /// <summary>
         /// Show the DockPane.
@@ -139,7 +114,6 @@ namespace GeogigModule
 
             TreeViewItemViewModel serverTVI = vm.Servers.FirstOrDefault<TreeViewItemViewModel>(i => i.IsSelected);
 
-
             foreach (var server in vm.Servers)
             {
                 foreach (var repo in server.Children)
@@ -157,8 +131,6 @@ namespace GeogigModule
                     }
                 }
             }
-            //string uri = ArcGIS.Desktop.Core.Project.Current.URI;
-            //ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(string.Format("Project uri {0}", uri));
         }
     }
 }

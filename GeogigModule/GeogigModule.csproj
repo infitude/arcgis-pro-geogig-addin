@@ -111,7 +111,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\ImportCommand.cs" />
+    <Compile Include="WebApi\ImportCommand.cs" />
     <Compile Include="ViewModel\NodeViewModel.cs" />
     <Compile Include="WebApi\BranchCommand.cs" />
     <Compile Include="WebApi\ExportCommand.cs" />

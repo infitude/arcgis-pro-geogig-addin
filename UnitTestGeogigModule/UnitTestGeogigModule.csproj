@@ -64,6 +64,17 @@
       <Name>GeogigModule</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="MapData\citytown.dbf" />
+    <None Include="MapData\citytown.prj" />
+    <None Include="MapData\citytown.sbn" />
+    <None Include="MapData\citytown.sbx" />
+    <None Include="MapData\citytown.shp" />
+    <None Include="MapData\citytown.shx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MapData\citytown.shp.xml" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
