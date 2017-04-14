@@ -13,13 +13,21 @@ namespace UnitTestGeogigModule
     public class UnitTests
     {
         [TestMethod]
+        public void TestDeserializeReposJson()
+        {
+            // GET http://localhost:8182/repos
+            string json = @"{""repos"":{""repo"":[{""name"":""gold"",""href"":""http://localhost:8182/repos/gold.json""},{""name"":""blue"",""href"":""http://localhost:8182/repos/blue.json""}]}}";
+            repos repos = JsonConvert.DeserializeObject<repos>(json);
+        }
+
+        [TestMethod]
         public void TestDeserializeBranchJson()
         {
             // GET http://localhost:8182/repos/repo/branch?output_format=json&list=True HTTP/1.1
-            string json = @"{ ""response"":{ ""success"":true,""Local"":{ ""Branch"":{ ""name"":""master""} },""Remote"":""""} }";
+            string json = @"{""response"":{""success"":true,""Local"":{""Branch"":[{""name"":""master""}]},""Remote"":{""Branch"":[]}}}";
             BranchResponse responseObject = JsonConvert.DeserializeObject<BranchResponse>(json);
             Assert.AreEqual(responseObject.branchResponseType.success, true);
-            Assert.AreEqual(responseObject.branchResponseType.local.branch.BranchName, "master");
+            Assert.AreEqual(responseObject.branchResponseType.local.branches[0].BranchName, "master");
         }
 
         [TestMethod]
@@ -126,9 +134,9 @@ namespace UnitTestGeogigModule
         public void TestDeserializeLsTreeJson()
         {
             // GET http://localhost:8182/repos/repo/ls-tree?path=HEAD&output_format=json&onlyTrees=True HTTP/1.1
-            string json = @"{""response"":{""success"":true,""node"":{""path"":""citytown""}}}";
+            string json = @"{""response"":{""success"":true,""node"":[{""path"":""citytown""}]}}";
             LsTreeResponse responseObject = JsonConvert.DeserializeObject<LsTreeResponse>(json);
-            Assert.AreEqual(responseObject.lsTreeResponseType.node.PathName, "citytown");
+            Assert.AreEqual(responseObject.lsTreeResponseType.nodes[0].PathName, "citytown");
         }
 
         [TestMethod]

@@ -42,7 +42,7 @@ namespace GeogigModule
                 {
                     throw new System.ApplicationException(response);
                 }
-                Node node = responseObject.lsTreeResponseType.node;
+                Node node = responseObject.lsTreeResponseType.nodes[0];
                 node.branch = branch;
                 nodes = new Node[] { node };
             }

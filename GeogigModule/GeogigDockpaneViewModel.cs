@@ -116,16 +116,25 @@ namespace GeogigModule
 
             foreach (var server in vm.Servers)
             {
-                foreach (var repo in server.Children)
+                if (server.Children != null)
                 {
-                    foreach (var branch in repo.Children)
+                    foreach (var repo in server.Children)
                     {
-                        foreach (var node in branch.Children)
+                        if (repo.Children != null)
                         {
-                            if(node.IsSelected)
+                            foreach (var branch in repo.Children)
                             {
-                                NodeViewModel selectedNVM = (NodeViewModel)node ;
-                                ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(selectedNVM.PathName);
+                                if (branch.Children != null)
+                                {
+                                    foreach (var node in branch.Children)
+                                    {
+                                        if (node.IsSelected)
+                                        {
+                                            NodeViewModel selectedNVM = (NodeViewModel)node;
+                                            ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(selectedNVM.PathName);
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

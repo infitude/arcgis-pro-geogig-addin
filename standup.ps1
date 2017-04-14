@@ -35,7 +35,7 @@ Set-Location -Path $repoPath
 &geogig add
 &geogig commit -m "first version"
 
-# start web api
+# start web api (--multirepo)
 &geogig serve
 
 

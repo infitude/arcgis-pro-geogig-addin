@@ -35,7 +35,7 @@ namespace GeogigModule
                 {
                     throw new System.ApplicationException(response);
                 }
-                Branch branch = responseObject.branchResponseType.local.branch;
+                Branch branch = responseObject.branchResponseType.local.branches[0];
                 branch.repository = repository;
                 string objectId = RefParseCommand.GetRef(branch);
                 branch.objectId = objectId;

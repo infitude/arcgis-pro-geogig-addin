@@ -10,6 +10,6 @@ namespace GeogigModule
     public class BranchResponseLocal
     {
         [JsonPropertyAttribute(PropertyName = "Branch", NullValueHandling = NullValueHandling.Ignore)]
-        public Branch branch { get; set; }
+        public Branch[] branches { get; set; }
     }
 }

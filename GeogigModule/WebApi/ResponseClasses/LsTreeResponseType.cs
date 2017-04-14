@@ -13,6 +13,6 @@ namespace GeogigModule
         public bool success { get; set; }
 
         [JsonPropertyAttribute(PropertyName = "node", NullValueHandling = NullValueHandling.Ignore)]
-        public Node node { get; set; }
+        public Node[] nodes { get; set; }
     }
 }

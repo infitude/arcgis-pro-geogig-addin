@@ -18,8 +18,6 @@ namespace GeogigModule
 
         public static Repository[] GetRepositories(Server server)
         {
-            Repository[] repositories;
-
             WebClient wc = new WebClient();
             wc.Headers.Add("user-agent", "arcgis_pro");
             wc.Headers.Add("Accept", "application/json");
@@ -34,13 +32,14 @@ namespace GeogigModule
                 //    //throw
                 //    throw new System.ApplicationException(response);
                 //}
+
                 repos repos = JsonConvert.DeserializeObject<repos>(response);
-
-                repos.repo.repository.server = server;
-
-                repositories = new Repository[] { repos.repo.repository };
+                foreach (var repository in repos.repo.repositories)
+                {
+                    repository.server = server;
+                }
             }
-            return repositories;
+            return repos.repo.repositories;
         }
 
     }
@@ -51,13 +50,13 @@ namespace GeogigModule
     public class repos
     {
         [JsonPropertyAttribute(PropertyName = "repos", NullValueHandling = NullValueHandling.Ignore)]
-        public repo repo { get; set; }
+        public static repo repo { get; set; }
     }
 
     public class repo
     {
         [JsonPropertyAttribute(PropertyName = "repo", NullValueHandling = NullValueHandling.Ignore)]
-        public Repository repository { get; set; }
+        public Repository[] repositories { get; set; }
     }
 
 
