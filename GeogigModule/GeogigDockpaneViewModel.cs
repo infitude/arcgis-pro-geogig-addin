@@ -33,6 +33,27 @@ namespace GeogigModule
             get { return _servers; }
         }
 
+        public Node FindNode(string pathName)
+        {
+            foreach (var server in _servers)
+            {
+                foreach (var repo in server.Children)
+                {
+                    foreach (var branch in repo.Children)
+                    {
+                        foreach (var node in branch.Children)
+                        {
+                            NodeViewModel nvm = (NodeViewModel)node;
+                            if (nvm.PathName == pathName)
+                                return nvm.node;
+                            //ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(nvm.PathName);
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// Show the DockPane.
         /// </summary>

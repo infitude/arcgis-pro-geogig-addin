@@ -10,7 +10,7 @@ namespace GeogigModule
     public class NewFeatures
     {
         [JsonPropertyAttribute(PropertyName = "type", NullValueHandling = NullValueHandling.Ignore)]
-        public NewFeaturesType type { get; set; }
-
+        //public NewFeaturesType type { get; set; }
+        public JsonObjectAttribute[] newFeatures { get; set; }
     }
 }

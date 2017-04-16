@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ArcGIS.Desktop.Framework.Dialogs;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -55,7 +56,6 @@ namespace GeogigModule
             }
         }
 
-
         // POST http://localhost:8182/repos/repo/import.json?interchange=True&format=gpkg&destPath=citytown&authorEmail=pete%40example.com&authorName=Pete&transactionId=ab52b2e9-aecc-4607-a435-18952de3e04f&message=moved+another HTTP/1.1
         // Host: localhost:8182
         // Connection: keep-alive
@@ -69,34 +69,47 @@ namespace GeogigModule
         //Content-Disposition: form-data; name="fileUpload"; filename="citytown.gpkg"
         // SQLite format...
         // --c8dac9b1566f4f4d84a7563a6e9d22d7--
-
-
+        
         private static async Task<TaskResponse> PostImport(Node node, string transactionId)
         {
-            FileInfo fi = new FileInfo(@"c:\temp\largefile.gpkg");
+            // copy geopackage as Pro will have non-sharble lock on the file
+            File.Copy(@"c:\temp\largefile.gpkg", @"c:\temp\temp.gpkg", true);
+
+            FileInfo fi = new FileInfo(@"c:\temp\temp.gpkg");
             var fileBytes = File.ReadAllBytes(fi.FullName);
 
             StringBuilder request = new StringBuilder();
-            request.Append(@"http://localhost.fiddler:8182/repos/repo/import.json?interchange=True&format=gpkg&destPath=citytown&authorEmail=pete%40example.com&authorName=Pete&transactionId=");
+            request.Append(node.branch.repository.server.Url);
+            request.Append(@"/repos/");
+            request.Append(node.branch.repository.RepositoryName);
+            request.Append(@"/import.json?interchange=True&format=gpkg&destPath=");
+            request.Append(node.PathName);
+            request.Append(@"&authorEmail=pete%40example.com&authorName=Pete&transactionId=");
             request.Append(transactionId);
             request.Append(@"&message=moved+another&output_format=json");
 
-            using (var client = new HttpClient())
-            {                
-                using (var content =
-                    new MultipartFormDataContent("Upload----" + DateTime.Now.ToString(CultureInfo.InvariantCulture)))
-                {
-                    content.Add(new StreamContent(new MemoryStream(fileBytes)), "fileUpload", "citytown.gpkg");
-
-                    using (
-                       var message =
-                           await client.PostAsync(request.ToString(), content))
+            try
+            {
+                using (var client = new HttpClient())
+                {                
+                    using (var content = new MultipartFormDataContent("Upload----" + DateTime.Now.ToString(CultureInfo.InvariantCulture)))
                     {
-                        var input = await message.Content.ReadAsStringAsync();
-                        TaskResponse responseObject = JsonConvert.DeserializeObject<TaskResponse>(input);
-                        return responseObject;
+                        content.Add(new StreamContent(new MemoryStream(fileBytes)), "fileUpload", "citytown.gpkg");
+
+                        using (var message = await client.PostAsync(request.ToString(), content))
+                        {
+
+                            var input = await message.Content.ReadAsStringAsync();
+                            TaskResponse responseObject = JsonConvert.DeserializeObject<TaskResponse>(input);
+                            return responseObject;
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                return null;
             }
         }
     }    

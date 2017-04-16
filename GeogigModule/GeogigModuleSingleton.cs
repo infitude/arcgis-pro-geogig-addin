@@ -47,27 +47,47 @@ namespace GeogigModule
             return true;
         }
 
+        private bool _isImporting = false;
+
         internal static async void OnGeogigLayerSyncButtonClick()
         {
-            var bCreated = await ExecuteAddFileGDB(@"c:\temp\test", @"MyNewFileGDB");
-            if (bCreated) MessageBox.Show("File GDB Created");
+            if (GeogigModuleSingleton.Current._isImporting)
+            {
+                return;
+            }
+            GeogigModuleSingleton.Current._isImporting = true;
+            // copy from geodb to geopackage adds, edits and deletes
+            var projGDBPath = Project.Current.DefaultGeodatabasePath;
+            var bCopied = await CopyFeaturesFromGeopackage(projGDBPath, "citytown", @"C:\Temp\largefile.gpkg", "main.citytown");
+
+            // import back into local geogig - find node in view model for this featureset...
+            GeogigDockpaneViewModel vm = FrameworkApplication.DockPaneManager.Find(GeogigDockpaneViewModel.DockPaneID) as GeogigDockpaneViewModel;
+            if (vm == null)
+                return;
+            Node node = vm.FindNode("citytown");
+            Repository repo = node.branch.repository;
+            string transactionId = TransactionCommand.BeginTransaction(repo);
+            var x = await ImportCommand.ExecuteImport(node, transactionId);
+            TransactionCommand.EndTransaction(repo, transactionId);
+            GeogigModuleSingleton.Current._isImporting = false;
+            if (bCopied) MessageBox.Show("Features sync back to Geogig");
         }
 
 
-        private async static Task<bool> ExecuteAddFileGDB(string fileGdbPath, string fileGdbName)
+        // hints on coding from https://geonet.esri.com/thread/173588
+        public async static Task<bool> CopyFeaturesFromGeopackage(string geopackagePath, string geopackageName, string fileGdbPath, string fileGdbName)
         {
             try
             {
                 return await ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
                 {
-                    var fGdbPath = fileGdbPath;
+                    var fGdbFeatureClass = Path.Combine( fileGdbPath, fileGdbName);
+                    var GeoPkgFeatureClass = Path.Combine(geopackagePath, geopackageName);
                     var fGdbName = fileGdbName;
-                    var fGdbVersion = "Current";  // create the 'latest' version of file Geodatabase
-                    System.Diagnostics.Debug.WriteLine($@"create {fGdbPath} {fGdbName}");
-                    var parameters = Geoprocessing.MakeValueArray
-                        (fGdbPath, fGdbName, fGdbVersion);
+                    System.Diagnostics.Debug.WriteLine($@"copyFeatures {GeoPkgFeatureClass} {fGdbFeatureClass}");
+                    var parameters = Geoprocessing.MakeValueArray(GeoPkgFeatureClass, fGdbFeatureClass);
                     var cts = new CancellationTokenSource();
-                    var results = Geoprocessing.ExecuteToolAsync("management.CreateFileGDB", parameters, null, cts.Token,
+                    var results = Geoprocessing.ExecuteToolAsync("CopyFeatures_management", parameters, null, cts.Token,
                         (eventName, o) =>
                         {
                             System.Diagnostics.Debug.WriteLine($@"GP event: {eventName}");
@@ -82,6 +102,34 @@ namespace GeogigModule
             }
         }
 
+        //private async static Task<bool> ExecuteAddFileGDB(string fileGdbPath, string fileGdbName)
+        //{
+        //    try
+        //    {
+        //        return await ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        //        {
+        //            var fGdbPath = fileGdbPath;
+        //            var fGdbName = fileGdbName;
+        //            var fGdbVersion = "Current";  // create the 'latest' version of file Geodatabase
+        //            System.Diagnostics.Debug.WriteLine($@"create {fGdbPath} {fGdbName}");
+        //            var parameters = Geoprocessing.MakeValueArray
+        //                (fGdbPath, fGdbName, fGdbVersion);
+        //            var cts = new CancellationTokenSource();
+        //            var results = Geoprocessing.ExecuteToolAsync("CreateFileGDB_management", parameters, null, cts.Token,
+        //                (eventName, o) =>
+        //                {
+        //                    System.Diagnostics.Debug.WriteLine($@"GP event: {eventName}");
+        //                });
+        //            return true;
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.ToString());
+        //        return false;
+        //    }
+        //}
+
         internal static async void OnGeogigLayerSyncButtonClickNot()
         {
             // get layername
@@ -95,19 +143,7 @@ namespace GeogigModule
                 if (layer != null)
                 {
                     layerName = layer.Name;
-
-                    //            var table = layer.GetTable();
-                    //            var dataStore = table.GetDatastore();
-                    //            var workspaceNameDef = dataStore.GetConnectionString();
-                    //            var workspaceName = workspaceNameDef.Split('=')[1];
-                    //            var fullSpec = System.IO.Path.Combine(workspaceName, layerName);
-
-
-                    //                    SQLiteConnectionPath sqLiteConnectionPath = new SQLiteConnectionPath(new Uri("C:\\temp\\geogig\\data\\test.sqlite"));
-                    //                  Database database = new Database(sqLiteConnectionPath);
-
                    
-
                 }
                 
             }
